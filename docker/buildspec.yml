@@ -1,0 +1,26 @@
+version: 0.2
+
+env:
+  parameter-store:
+    DOCKER_USER: dockerhub-user
+    DOCKER_TOKEN: dockerhub-token
+
+phases:
+  pre_build:
+    commands:
+      - echo Logging in to Docker Hub...
+      - echo $DOCKER_TOKEN | docker login -u $DOCKER_USER --password-stdin
+      - REPOSITORY_URI=${DOCKER_USER}/graph-node
+      - IMAGE_TAG=$(git rev-parse --short HEAD)
+  build:
+    commands:
+      - echo Build started on `date`
+      - echo Building the Docker image...
+      - ./docker/build.sh
+      - docker tag graph-node ${REPOSITORY_URI}:latest
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - echo Pushing the Docker image...
+      - docker push ${REPOSITORY_URI}:last
+      - echo Finish building the project

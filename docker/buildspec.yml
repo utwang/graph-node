@@ -22,5 +22,5 @@ phases:
     commands:
       - echo Build completed on `date`
       - echo Pushing the Docker image...
-      - docker push ${REPOSITORY_URI}:last
+      - docker push ${REPOSITORY_URI}:latest
       - echo Finish building the project

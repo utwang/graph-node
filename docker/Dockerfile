@@ -15,7 +15,7 @@ ADD . /graph-node
 
 RUN cd /graph-node \
     && apt-get update && apt-get install -y cmake \
-    && apt-get install -y gcc-multilib \
+    && apt-get install -y build-essential \
     && rustup component add rustfmt \
     && RUSTFLAGS="-g" cargo install --locked --path node \
     && cargo clean \
